@@ -127,6 +127,23 @@ const paranoidUser = async(req,res)=>{
    res.status(200).json({data})
 }
 
+ const loadingUser = async(req,res)=>{
+//    const data = await User.create({firstName:"Anamika",lastName:"Verma"})
+//     if(data && data.id){
+//      await Contact.create({permanent_address:"Bihar",current_address:"Indore",
+//          UserId:data.id })
+//      }
+ 
+    const data = await User.findOne({
+                where:{id:2}
+     });
+    
+    const contactData = await data.getContacts(); 
+ 
+    res.status(200).json({data,contactData})
+ }
+
+
 module.exports = {
     postUsers,
     getUsers,
@@ -137,5 +154,6 @@ module.exports = {
     usersRawQuery,
     oneToOneUser,
     manyToManyUser,
-    paranoidUser
+    paranoidUser,
+    loadingUser
 }

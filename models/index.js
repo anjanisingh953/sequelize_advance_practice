@@ -3,7 +3,9 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = new Sequelize('employeedb','root','',{
     host:'localhost',
     dialect:'mysql',
-    port:3307});
+    port:3307,
+    logging:false
+});
 
 try {
     sequelize.authenticate();
@@ -24,8 +26,8 @@ db.userContacts = require('./userContacts')(sequelize,DataTypes,db.user,db.conta
 db.user.hasMany(db.contact)
 db.contact.belongsTo(db.user)
 
-db.user.hasMany(db.education)
-db.education.belongsTo(db.user)
+db.contact.hasMany(db.education)
+db.education.belongsTo(db.contact)
 
 // db.user.belongsToMany(db.contact,{through:db.userContacts});
 // db.contact.belongsToMany(db.user,{through:db.userContacts});

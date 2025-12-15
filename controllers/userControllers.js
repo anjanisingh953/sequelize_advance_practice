@@ -153,14 +153,20 @@ const paranoidUser = async(req,res)=>{
 //      }
  
     const data = await User.findAll({
-                include:[{
+                include:{
                     model:Contact,
-                    required:false,
-                    right:true
-                },
-                {
-                    model:Education
-                }]
+                    include:{
+                        model:Education
+                    }
+                }
+        // include:[{
+                //     model:Contact,
+                //     required:false,
+                //     right:true
+                // },
+                // {
+                //     model:Education
+                // }]
      });
     
 

@@ -211,6 +211,52 @@ const paranoidUser = async(req,res)=>{
     res.status(200).json({data})
  }
 
+
+const mnAssociationUser = async(req,res)=>{
+    
+//    const amidala = await db.customer.create({ username: 'p4dm3', points: 1000 });
+//    const queen = await db.profile.create({ name: 'Queen' });
+//    await amidala.addProfile(queen, { through: { selfGranted: false } });
+//    const result = await db.customer.findOne({
+//         where: { username: 'p4dm3' },
+//           include: db.profile,
+//    });
+
+// const amidala = await db.customer.create(
+//   {
+//     username: 'p4dm3',
+//     points: 1000,
+//     profiles: [
+//       {
+//         name: 'Queen',
+//         User_Profile: {
+//           selfGranted: true,
+//         },
+//       },
+//     ],
+//   },
+//   {
+//     include: db.profile,
+//   },
+// );
+
+// const result = await db.customer.findOne({
+//   where: { username: 'p4dm3' },
+//   include: db.profile,
+// });
+
+    const result = await db.customer.findAll({
+    include: {
+        model: db.grant,
+        include: db.profile,
+    },
+    });
+
+   console.log(result);
+    res.status(200).json({data:result})
+}
+
+
 module.exports = {
     postUsers,
     getUsers,
@@ -224,5 +270,6 @@ module.exports = {
     paranoidUser,
     lazyLoadingUser,
     eagerLoadingUser,
-    creatorUser
+    creatorUser,
+    mnAssociationUser
 }

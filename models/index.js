@@ -21,7 +21,22 @@ db.sequelize = sequelize;
 db.user = require('./user')(sequelize,DataTypes,Model)
 db.contact = require('./contact')(sequelize,DataTypes)
 db.education = require('./education')(sequelize,DataTypes)
+db.customer = require('./customer')(sequelize,DataTypes)
+db.profile = require('./profile')(sequelize,DataTypes)
+Grant = require('./grant')(sequelize,DataTypes)
+db.grant = Grant;
 db.userContacts = require('./userContacts')(sequelize,DataTypes,db.user,db.contact)
+
+db.customer.belongsToMany(db.profile, { through: Grant });
+db.profile.belongsToMany(db.customer, { through: Grant });
+
+
+db.customer.hasMany(Grant);
+Grant.belongsTo(db.customer);
+
+db.profile.hasMany(Grant);
+Grant.belongsTo(db.profile);
+
 
 db.user.hasMany(db.contact)
 db.contactUser =  db.contact.belongsTo(db.user,{foreignKey:'UserId',as:'users'})

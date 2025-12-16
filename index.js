@@ -34,6 +34,7 @@ app.get('/lazy-loading',userController.lazyLoadingUser)
 app.get('/eager-loading',userController.eagerLoadingUser)
 app.get('/create-by-association',userController.creatorUser)
 app.get('/m-n-association',userController.mnAssociationUser)
+app.get('/m2m2m',userController.m2m2mUser)
 
 
 

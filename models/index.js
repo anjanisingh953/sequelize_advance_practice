@@ -84,8 +84,8 @@ db.playerGameTeam.belongsTo(db.gameTeam);
 db.player.hasMany(db.playerGameTeam);
 db.gameTeam.hasMany(db.playerGameTeam);
 
-// db.sequelize.sync();
-db.sequelize.sync({force:true});
+db.sequelize.sync();
+// db.sequelize.sync({force:true});
 // db.sequelize.drop();
 
 

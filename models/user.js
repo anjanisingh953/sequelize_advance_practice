@@ -39,6 +39,10 @@ module.exports = (sequelize,DataTypes)=>{
                   msg: 'Must be Indore, Bhopal, Jabalpur or Delhi'
                }
              }
+        },
+        status:{
+          type:DataTypes.INTEGER
+
         }
     },{
         tableName:'users',

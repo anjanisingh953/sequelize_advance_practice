@@ -312,6 +312,16 @@ const m2m2mUser = async(req,res)=>{
     res.status(200).json({data})
 }
 
+const scopesUser = async(req,res)=>{
+
+  User.addScope('checkStatus',{where:{status:0}})
+
+  const data = await User.scope('checkStatus').findAll({})
+    res.status(200).json({data})
+}
+
+
+
 module.exports = {
     postUsers,
     getUsers,
@@ -327,5 +337,6 @@ module.exports = {
     eagerLoadingUser,
     creatorUser,
     mnAssociationUser,
-    m2m2mUser
+    m2m2mUser,
+    scopesUser
 }

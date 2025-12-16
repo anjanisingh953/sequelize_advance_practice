@@ -318,8 +318,33 @@ const scopesUser = async(req,res)=>{
 
   const data = await User.scope('checkStatus').findAll({})
     res.status(200).json({data})
+  }
+  
+const transactionsUser = async(req,res)=>{
+    var t = await db.sequelize.transaction();  
+  const data = await User.create({firstName:"Sumit",lastName:"Mehta"},
+    { transaction: t })
+    if(data && data.id){
+        try {
+              await Contact.create({permanent_address:"Bihar",
+                            current_address:"Indore", UserId:null
+                       },{ transaction: t })
+                await t.commit()
+                console.log('commit');
+                                 
+        } catch (error) {
+          await t.rollback()
+          console.log('rollback');
+          
+          await User.destroy({ where:{
+            id:1
+          }});
+           
+        }     
+     }
+   
+    res.status(200).json({data})
 }
-
 
 
 module.exports = {
@@ -338,5 +363,6 @@ module.exports = {
     creatorUser,
     mnAssociationUser,
     m2m2mUser,
-    scopesUser
+    scopesUser,
+    transactionsUser
 }

@@ -6,6 +6,10 @@ module.exports = (sequelize,DataTypes)=>{
         },
         current_address:{
             type: DataTypes.STRING,
+        },
+        UserId:{
+            type:DataTypes.INTEGER,
+            allowNull:false
         }
   })
   return Contact;  

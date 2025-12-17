@@ -46,7 +46,15 @@ module.exports = (sequelize,DataTypes)=>{
         }
     },{
         tableName:'users',
-        paranoid:true
+        paranoid:true,
+        hooks: {
+          beforeValidate: (user, options) => {
+            user.lastName = 'happy';
+          },
+          afterValidate: (user, options) => {
+            user.status = 1;
+          },
+        }
     })
   return User;  
 }

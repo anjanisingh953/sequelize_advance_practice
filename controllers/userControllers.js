@@ -379,6 +379,11 @@ const transactionsUser = async(req,res)=>{
     }
 }
 
+const hooksUser =  async(req,res)=>{
+    const data =  await User.create({firstName:'Simran',lastName:'Swami',status:0})
+    res.status(200).json({data})
+}
+
 module.exports = {
     postUsers,
     getUsers,
@@ -396,5 +401,6 @@ module.exports = {
     mnAssociationUser,
     m2m2mUser,
     scopesUser,
-    transactionsUser
+    transactionsUser,
+    hooksUser
 }

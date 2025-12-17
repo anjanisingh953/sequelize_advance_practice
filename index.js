@@ -40,6 +40,7 @@ app.get('/transactions',userController.transactionsUser)
 app.get('/hooks',userController.hooksUser)
 app.get('/polyOneToMany',userController.polyOneToManyUser)
 app.get('/polyManyToMany',userController.polyManyToManyUser)
+app.get('/query-interface',userController.queryInterfaceUser)
 
 
 

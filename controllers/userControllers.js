@@ -435,6 +435,20 @@ const polyManyToManyUser = async(req,res)=>{
 
   const data = {};
    res.status(200).json({videoData})
+  }
+  
+  const queryInterfaceUser = async(req,res)=>{
+    const queryInterface =  db.sequelize.getQueryInterface(); 
+   queryInterface.createTable('Person', {
+  name: db.DataTypes.STRING,
+  isBetaMember: {
+    type: db.DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
+});
+
+    res.status(200).json({data:''})
 }
 
 module.exports = {
@@ -457,6 +471,6 @@ module.exports = {
     transactionsUser,
     hooksUser,
     polyOneToManyUser,
-    polyManyToManyUser
-
+    polyManyToManyUser,
+    queryInterfaceUser
 }

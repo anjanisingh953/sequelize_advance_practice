@@ -17,6 +17,7 @@ try {
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+db.DataTypes = DataTypes;
 
 db.user = require('./user')(sequelize,DataTypes,Model)
 db.image = require('./image')(sequelize,DataTypes,Model)

@@ -6,7 +6,8 @@ const Education = db.education;
 const Image = db.image;
 const Video = db.video;
 const Comment = db.comment;
-
+const Tag = db.tag;
+const TagTaggable = db.tagTaggable;
 
 
 const postUsers = async(req,res)=>{
@@ -389,7 +390,7 @@ const hooksUser =  async(req,res)=>{
     res.status(200).json({data})
 }
 
-const polyOneTwoManyUser = async(req,res)=>{
+const polyOneToManyUser = async(req,res)=>{
     const imageData = await Image.create({title:'First Image',url:'first_url'});
     const videoData =  await Video.create({title:'First Video',text:'Awesome Video'});
     if(imageData.id && videoData.id){
@@ -415,6 +416,27 @@ const polyOneTwoManyUser = async(req,res)=>{
     res.status(200).json({data:imageData})
 }
 
+const polyManyToManyUser = async(req,res)=>{
+
+    // const imageData = await Image.create({title:'First Image for css',url:'first_url'});
+    const videoData =  await Video.create({title:'Second Video  for css',text:'Awesome Video'});
+    const tagData =  await Tag.create({name:'css'});
+ 
+ 
+    // if(tagData && tagData.id && imageData && imageData.id){
+    //   await TagTaggable.create({tagId:tagData.id,taggableId:imageData.id,
+    //     taggableType:'image'});
+    // }
+
+    if(tagData && tagData.id && videoData && videoData.id){
+      await TagTaggable.create({tagId:tagData.id,taggableId:videoData.id,
+        taggableType:'video'});
+    }
+
+  const data = {};
+   res.status(200).json({videoData})
+}
+
 module.exports = {
     postUsers,
     getUsers,
@@ -434,5 +456,7 @@ module.exports = {
     scopesUser,
     transactionsUser,
     hooksUser,
-    polyOneTwoManyUser
+    polyOneToManyUser,
+    polyManyToManyUser
+
 }

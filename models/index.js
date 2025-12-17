@@ -22,6 +22,10 @@ db.user = require('./user')(sequelize,DataTypes,Model)
 db.image = require('./image')(sequelize,DataTypes,Model)
 db.video = require('./video')(sequelize,DataTypes,Model)
 db.comment = require('./comment')(sequelize,DataTypes,Model)
+db.tag = require('./tag')(sequelize,DataTypes,Model)
+db.tagTaggable = require('./tag_taggable')(sequelize,DataTypes,Model)
+
+
 db.contact = require('./contact')(sequelize,DataTypes)
 db.education = require('./education')(sequelize,DataTypes)
 db.customer = require('./customer')(sequelize,DataTypes)
@@ -110,7 +114,48 @@ db.video.hasMany(db.comment, {
 db.comment.belongsTo(db.video, { foreignKey: 'commentableId', constraints: false });
 
 
+db.image.belongsToMany(db.tag, {
+  through: {
+    model: db.tagTaggable,
+    unique: false,
+    scope: {
+      taggableType: 'image',
+    },
+  },
+  foreignKey: 'taggableId',
+  constraints: false,
+});
 
+
+db.tag.belongsToMany(db.image, {
+  through: {
+    model: db.tagTaggable,
+    unique: false,
+  },
+  foreignKey: 'tagId',
+  constraints: false,
+});
+
+db.video.belongsToMany(db.tag, {
+  through: {
+    model: db.tagTaggable,
+    unique: false,
+    scope: {
+      taggableType: 'video',
+    },
+  },
+  foreignKey: 'taggableId',
+  constraints: false,
+});
+
+db.tag.belongsToMany(db.video, {
+  through: {
+    model: db.tagTaggable,
+    unique: false,
+  },
+  foreignKey: 'tagId',
+  constraints: false,
+});
 
 db.sequelize.sync();
 // db.sequelize.sync({force:true});

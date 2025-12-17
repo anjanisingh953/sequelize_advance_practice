@@ -38,6 +38,7 @@ app.get('/m2m2m',userController.m2m2mUser)
 app.get('/scopes',userController.scopesUser)
 app.get('/transactions',userController.transactionsUser)
 app.get('/hooks',userController.hooksUser)
+app.get('/polyOneTwoMany',userController.polyOneTwoManyUser)
 
 
 

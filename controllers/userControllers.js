@@ -3,6 +3,11 @@ const db = require('../models/index');
 const User = db.user;
 const Contact = db.contact;
 const Education = db.education;
+const Image = db.image;
+const Video = db.video;
+const Comment = db.comment;
+
+
 
 const postUsers = async(req,res)=>{
     
@@ -384,6 +389,32 @@ const hooksUser =  async(req,res)=>{
     res.status(200).json({data})
 }
 
+const polyOneTwoManyUser = async(req,res)=>{
+    const imageData = await Image.create({title:'First Image',url:'first_url'});
+    const videoData =  await Video.create({title:'First Video',text:'Awesome Video'});
+    if(imageData.id && videoData.id){
+      await Comment.create({title:'First Comment for image',
+        commentableId:imageData.id,commentableType:'image'});
+      await Comment.create({title:'First Comment for video',
+        commentableId:videoData.id,commentableType:'video'});
+    }
+
+    const imageCommentData = await Image.findAll({
+      include:[{
+        model:Comment
+       }]
+    })
+
+    const videoCommentData = await Video.findAll({
+      include:[{
+        model:Comment
+       }]
+    })
+
+
+    res.status(200).json({data:imageData})
+}
+
 module.exports = {
     postUsers,
     getUsers,
@@ -402,5 +433,6 @@ module.exports = {
     m2m2mUser,
     scopesUser,
     transactionsUser,
-    hooksUser
+    hooksUser,
+    polyOneTwoManyUser
 }

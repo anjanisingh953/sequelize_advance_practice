@@ -19,6 +19,9 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require('./user')(sequelize,DataTypes,Model)
+db.image = require('./image')(sequelize,DataTypes,Model)
+db.video = require('./video')(sequelize,DataTypes,Model)
+db.comment = require('./comment')(sequelize,DataTypes,Model)
 db.contact = require('./contact')(sequelize,DataTypes)
 db.education = require('./education')(sequelize,DataTypes)
 db.customer = require('./customer')(sequelize,DataTypes)
@@ -83,6 +86,31 @@ db.playerGameTeam.belongsTo(db.player);
 db.playerGameTeam.belongsTo(db.gameTeam);
 db.player.hasMany(db.playerGameTeam);
 db.gameTeam.hasMany(db.playerGameTeam);
+
+
+
+
+//polymorhpic associations
+db.image.hasMany(db.comment, {
+  foreignKey: 'commentableId',
+  constraints: false,
+  scope: {
+    commentableType: 'image',
+  },
+});
+db.comment.belongsTo(db.image, { foreignKey: 'commentableId', constraints: false });
+
+db.video.hasMany(db.comment, {
+  foreignKey: 'commentableId',
+  constraints: false,
+  scope: {
+    commentableType: 'video',
+  },
+});
+db.comment.belongsTo(db.video, { foreignKey: 'commentableId', constraints: false });
+
+
+
 
 db.sequelize.sync();
 // db.sequelize.sync({force:true});

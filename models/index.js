@@ -3,6 +3,12 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = new Sequelize('employeedb','root','',{
     host:'localhost',
     dialect:'mysql',
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    },
     port:3307,
     logging:false
 });
